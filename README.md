@@ -7,9 +7,8 @@ LCR-SMM is a novel large convergence region semantic map matching algorithm.
 - Eigen
 - Sophus
 - CERES
-- 
-## Compiling
 
+## Compiling
 ```bash
 $ mkdir build && cd build
 $ cmake ../
