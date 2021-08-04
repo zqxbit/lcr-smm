@@ -1,4 +1,4 @@
 LCR-SMM
 ====
-<video src="https://github.com/zqxbit/videos/fig6.mp4" controls="controls" width="500" height="300">
------
+<img src="https://github.com/zqxbit/videos/blob/main/multi-robot_2_0707.png" width="250" height="300">
+
