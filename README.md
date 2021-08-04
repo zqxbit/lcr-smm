@@ -14,4 +14,8 @@ $ mkdir build && cd build
 $ cmake ../
 $ make
 ```
+## Running 
+```bash
+$ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
+```
 
