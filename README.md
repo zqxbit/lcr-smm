@@ -25,7 +25,11 @@ $ make
 $ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
 ```
 ```bash
-
+Estimated Transformation:
+    0.865958     0.500116 -0.000395343     -4.00093
+   -0.500116     0.865958    0.0006292      -6.9226
+ 0.000657024 -0.000347144            1    0.0161345
+           0            0            0            1
 ```
 ### Displaying initial state
 ```bash
