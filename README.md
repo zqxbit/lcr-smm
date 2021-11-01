@@ -29,12 +29,12 @@ $ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
 ```
 ### Displaying initial state
 ```bash
-
+pcl_viewer -bc 255,255,255 init.pcd
 ```
 
 ### Displaying matched maps
 ```bash
-
+pcl_viewer -bc 255,255,255 LCR.pcd
 ```
 
 
