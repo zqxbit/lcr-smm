@@ -20,13 +20,23 @@ $ cmake ../
 $ make
 ```
 ## Running the Demo
+### Estimating the transformation
 ```bash
 $ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
 ```
-
 ```bash
 
 ```
+### Displaying initial state
+```bash
+
+```
+
+### Displaying matched maps
+```bash
+
+```
+
 
 ## Performing Semantic Map Matching
 ```bash
