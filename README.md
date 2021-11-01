@@ -19,8 +19,16 @@ $ mkdir build && cd build
 $ cmake ../
 $ make
 ```
-## Running 
+## Running the Demo
 ```bash
 $ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
 ```
 
+```bash
+
+```
+
+## Performing Semantic Map Matching
+```bash
+$ ./lcr-smm -s Path/to/Source/Map -t Path/to/Target/Map
+```
