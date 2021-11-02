@@ -1,7 +1,7 @@
 # LCR-SMM
 LCR-SMM: Large Convergence Region Semantic Map Matching through Expectation Maximization
 
-<img src="https://github.com/zqxbit/videos/blob/main/fig1-1223-2.png" width="500">
+<img src="https://github.com/zqxbit/videos/blob/main/fig1-1223-2.png" width="250">
 
 LCR-SMM is a large convergence region semantic map matching algorithm, with a transformation sampling strategy to reduce the initial error.
 
@@ -36,14 +36,14 @@ Estimated Transformation:
 pcl_viewer -bc 255,255,255 init.pcd
 ```
 
-<img src="https://github.com/zqxbit/videos/blob/main/00_init1102.png" width="500">
+<img src="https://github.com/zqxbit/videos/blob/main/00_init1102.png" width="250">
 
 ### Displaying matched maps
 ```bash
 pcl_viewer -bc 255,255,255 LCR.pcd
 ```
 
-<img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="500">
+<img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="250">
 
 
 ## Performing Semantic Map Matching
