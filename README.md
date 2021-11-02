@@ -36,14 +36,14 @@ Estimated Transformation:
 pcl_viewer -bc 255,255,255 init.pcd
 ```
 
-<img src="https://github.com/zqxbit/videos/blob/main/00_init1102.png" width="250">
+<img src="https://github.com/zqxbit/videos/blob/main/00_init1102.png" width="500">
 
 ### Displaying matched maps
 ```bash
 pcl_viewer -bc 255,255,255 LCR.pcd
 ```
 
-<img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="250">
+<img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="500">
 
 
 ## Performing Semantic Map Matching
