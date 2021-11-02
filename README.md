@@ -50,3 +50,17 @@ pcl_viewer -bc 255,255,255 LCR.pcd
 ```bash
 $ ./lcr-smm -s Path/to/Source/Map -t Path/to/Target/Map
 ```
+
+## Citation
+If you find our work useful in your research, please consider citing:
+
+```bash
+@article{2021_LCR_SMM,
+title={LCR-SMM: Large Convergence Region Semantic Map Matching through Expectation Maximization},
+author={Zhang, Qingxiang and Wang, Meiling and Yue, Yufeng and Liu, Tong},
+journal={IEEE/ASME Transactions on Mechatronics},
+pages={1--11},
+doi = {10.1109/TMECH.2021.3124994},
+publisher={IEEE}
+}
+```
