@@ -1,7 +1,7 @@
 # LCR-SMM
 LCR-SMM: Large Convergence Region Semantic Map Matching through Expectation Maximization
 
-<img src="https://github.com/zqxbit/videos/blob/main/fig1-1223-2.png" width="250">
+<img src="https://github.com/zqxbit/videos/blob/main/fig1-1223.png" width="500">
 
 LCR-SMM is a large convergence region semantic map matching algorithm, with a transformation sampling strategy to reduce the initial error.
 
