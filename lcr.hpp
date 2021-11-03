@@ -1,3 +1,12 @@
+/****************************************************************
+LCR-SMM Large Convergence Region Semantic Map Matching Algorithm
+Last modified: Nov 3, 2021
+
+The code for calculating cost function are derived from semantic-icp by Steven Parkison.
+https://bitbucket.org/saparkison/semantic-icp
+****************************************************************/
+
+
 #ifndef LCR_HPP_
 #define LCR_HPP_
 
@@ -6,19 +15,14 @@
 #include <pcl/point_cloud.h>
 #include <pcl/common/transforms.h>
 #include <pcl/kdtree/kdtree_flann.h>
-#include "cost_functor_autodiff.h"
 #include "cost_function.h"
-#include "local_parameterization_se3.h"
-#include "sqloss.h"
 #include <math.h>
 #include <Eigen/StdVector>
 #include <ceres/gradient_checker.h>
 
 
-namespace lcrsmm {
-
 template <size_t N>
-void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
+void LCR_SMM<N>::align(PointCloudPtr final_cloud,
                                     const Sophus::SE3d & init_transform) {
 
   ComputeCovariances(source_cloud_, source_kd_tree_, source_covariances_, source_distributions_);
@@ -40,8 +44,6 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
   };
   state current_state = just_start;
   while(converged!=true) {
-
-    // Build The Problem
     ceres::Problem problem;
     Sophus::SO3d current_transform_R(current_transform.rotationMatrix());
     transforms_R.push_back(current_transform_R.log());
@@ -50,11 +52,7 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
     {
         delta_transform_R.push_back(transforms_R[outter_itter]-transforms_R[outter_itter-1]);
         delta_transform_t.push_back(transforms_t[outter_itter]-transforms_t[outter_itter-1]);
-        //std::cout<<"delta_rotation:"<< delta_transform_R[outter_itter-1].transpose() << std::endl;
-        //std::cout<< "delta_translation:"<<delta_transform_t[outter_itter-1].transpose() << std::endl;
     }
-      //std::cout<<"rotation:"<< transforms_R[outter_itter].transpose() << std::endl;
-      //std::cout<< "translation:"<<transforms_t[outter_itter].transpose() << std::endl;
       if(outter_itter > 5&&current_state != nearly_converged)
       {
         if(outter_itter%10==0)
@@ -112,7 +110,6 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
         correspond_num = 8; 
       }
       std::cout << "current_correspond_num:"<<correspond_num<<std::endl;
-    // Add Sophus SE3 Parameter block with local parametrization
     Sophus::SE3d est_transform = current_transform;
     problem.AddParameterBlock(est_transform.data(), Sophus::SE3d::num_parameters,
                               new LocalParameterizationSE3);
@@ -151,9 +148,7 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
             target_distributions_->at(target_index[correspondence_index]);
           const Eigen::Matrix<double,N, 1> source_dist =
             source_distributions_->at(source_index);
-
-          //double prob = confusion_matrix_(source_pt.label-1, target_pt.label-1)*
-          //              dist(target_pt.label-1, 0);
+ 
           double prob =0;
           if(probability_mode)
           {
@@ -162,7 +157,6 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
               temp *= source_dist.transpose()*confusion_matrix_.col(s);
               prob += temp;
             }
-            //prob  *=  exp(-1*(float)dist_sq[correspondence_index]);
           }
           else
           {
@@ -184,22 +178,17 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
                                    ceres::TAKE_OWNERSHIP),
                                    est_transform.data());
 
-        }  // If close enough
-      }  // For loop over correspondences
-    }  // For loop over points
+        } 
+      } 
+    } 
     ceres::Solver::Options options;
     options.gradient_tolerance = 0.1 * Sophus::Constants<double>::epsilon();
     options.function_tolerance = 0.1 * Sophus::Constants<double>::epsilon();
     options.linear_solver_type = ceres::DENSE_QR;
     options.num_threads = 8;
-//    options.num_linear_solver_threads = 8;
-//    options.num_threads = 8; //kx
     options.max_num_iterations = 400;
-   // options.check_gradients = true;
     options.gradient_check_numeric_derivative_relative_step_size = 1e-8;
     options.gradient_check_relative_precision = 1e-6;
-
-    // Solve
     ceres::Solver::Summary summary;
     ceres::Solve(options, &problem, &summary);
 
@@ -210,23 +199,6 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
     current_transform = est_transform;
     outter_itter++;
   }
-  /*
-  std::cout<<"rotation"<<std::endl;
-   for (int i = 1; i < outter_itter; i++)
-   {
-      std::cout<< transforms_R[i](1,0) << std::endl;
-   }
-  std::cout<<"t_x"<<std::endl;
-  for (int i = 1; i < outter_itter; i++) 
-  {
-    std::cout<<  transforms_t[i](0,0)<< std::endl;
-  }
-  std::cout<<"t_z"<<std::endl;
-  for (int i = 1; i < outter_itter; i++) 
-  {
-    std::cout<<  transforms_t[i](2,0)<< std::endl;
-  }
-  */
   final_transformation_ = current_transform;
    
   Sophus::SE3d trans = final_transformation_*base_transformation_;
@@ -242,7 +214,7 @@ void EmIterativeClosestPoint<N>::align(PointCloudPtr final_cloud,
 
 
 template <size_t N>
-void EmIterativeClosestPoint<N>::ComputeCovariances(
+void LCR_SMM<N>::ComputeCovariances(
     const PointCloudPtr cloudptr,
     KdTreePtr treeptr,
     MatricesVectorPtr matvecptr,
@@ -302,8 +274,6 @@ void EmIterativeClosestPoint<N>::ComputeCovariances(
         cov(l,k) = cov(k,l);
       }
     }
-
-    // SVD decomposition for PCA
     Eigen::JacobiSVD<Eigen::Matrix3d> svd(cov, Eigen::ComputeFullU);
     cov.setZero();
     Eigen::Matrix3d U = svd.matrixU();
@@ -323,7 +293,7 @@ void EmIterativeClosestPoint<N>::ComputeCovariances(
 
 }
 template <size_t N>
-void EmIterativeClosestPoint<N>:: errorcompute(double* errorvecptr, int branch_r, int branch_x, int branch_y)
+void LCR_SMM<N>:: errorcompute(double* errorvecptr, int branch_r, int branch_x, int branch_y)
 {
   std::vector<Eigen::Matrix4d, Eigen::aligned_allocator<Eigen::Matrix4d>>  test_trans_mat ;
   double delta_r, delta_x, delta_y;
@@ -424,6 +394,4 @@ void EmIterativeClosestPoint<N>:: errorcompute(double* errorvecptr, int branch_r
 }
 
 
-} // namespace lcrsmm
-
-#endif  // SEMANTIC_ICP_IMPL_EM_ICP_HPP_
+#endif

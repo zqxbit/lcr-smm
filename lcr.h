@@ -1,18 +1,26 @@
+/****************************************************************
+LCR-SMM Large Convergence Region Semantic Map Matching Algorithm
+Last modified: Nov 3, 2021
+
+The code for calculating cost function are derived from semantic-icp by Steven Parkison.
+https://bitbucket.org/saparkison/semantic-icp
+****************************************************************/
+
+
+
 #ifndef LCR_H_
 #define LCR_H_
 
 #include <vector>
-
 #include <sophus/se3.hpp>
 #include <sophus/types.hpp>
 #include <sophus/common.hpp>
 #include <pcl/registration/icp.h>
 #include <Eigen/Geometry>
-
-namespace lcrsmm {
+#include "lcr.hpp"
 
 template <size_t N>
-class EmIterativeClosestPoint {
+class LCR_SMM {
  public:
   typedef pcl::PointXYZL PointT;
   typedef typename pcl::PointCloud<PointT> PointCloud;
@@ -21,9 +29,6 @@ class EmIterativeClosestPoint {
   typedef std::vector<Eigen::Matrix3d,
                       Eigen::aligned_allocator<Eigen::Matrix3d>>
                       MatricesVector;
-  typedef std::vector<Eigen::Matrix<double, 6, 6>,
-                      Eigen::aligned_allocator<Eigen::Matrix<double, 6, 6>>>
-                      CovarianceVector;
   typedef std::vector<Eigen::Matrix<double, N, 1>,
                                Eigen::aligned_allocator<Eigen::Matrix<double, N, 1>>>
                                DistVector;
@@ -36,8 +41,7 @@ class EmIterativeClosestPoint {
 
   typedef Eigen::Matrix<double, 6, 1> Vector6d;
 
-  EmIterativeClosestPoint(int k = 20,
-                          double epsilon = 0.001) :
+  LCR_SMM(int k = 20, double epsilon = 0.001) :
   kCorrespondences_(k),
   kEpsilon_(epsilon) {
     Eigen::Matrix4d mat = Eigen::Matrix4d::Identity();
@@ -155,9 +159,4 @@ class EmIterativeClosestPoint {
                           MatricesVectorPtr matvec,
                           DistVectorPtr distvec);
 };
-
-}  // namespace lcrsmm
-
-#include "lcr.hpp"
-
-#endif  // LCR_H_
+#endif
