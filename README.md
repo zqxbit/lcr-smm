@@ -47,10 +47,12 @@ pcl_viewer -bc 255,255,255 LCR.pcd
 <img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="500">
 
 
-### Performing Semantic Map Matching
+### Aligning your semantic maps
 ```bash
-$ ./lcr-smm -s Path/to/Source/Map -t Path/to/Target/Map
+$ ./lcr-smm -s Path/to/Source/Map.pcd -t Path/to/Target/Map.pcd
 ```
+
+The input semantic maps need to be transformed to three-dimensional point clouds with semantic labels and saved as pcd files.  
 
 ## Citation
 If you find our work useful in your research, please consider citing:
