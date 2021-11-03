@@ -19,8 +19,9 @@ $ mkdir build && cd build
 $ cmake ../
 $ make
 ```
-## Running the Demo
-### Estimating the transformation
+## Performing Semantic Map Matching
+### Running the demo
+#### Estimating the transformation
 ```bash
 $ ./lcr-smm -s ../data/00_s_S.pcd -t ../data/00_s_T.pcd
 ```
@@ -31,14 +32,14 @@ Estimated Transformation:
  0.000657024 -0.000347144            1    0.0161345
            0            0            0            1
 ```
-### Displaying initial state
+#### Displaying initial state
 ```bash
 pcl_viewer -bc 255,255,255 init.pcd
 ```
 
 <img src="https://github.com/zqxbit/videos/blob/main/00_init1102.png" width="500">
 
-### Displaying matched maps
+#### Displaying matched maps
 ```bash
 pcl_viewer -bc 255,255,255 LCR.pcd
 ```
@@ -46,7 +47,7 @@ pcl_viewer -bc 255,255,255 LCR.pcd
 <img src="https://github.com/zqxbit/videos/blob/main/00_LCR1102.png" width="500">
 
 
-## Performing Semantic Map Matching
+### Performing Semantic Map Matching
 ```bash
 $ ./lcr-smm -s Path/to/Source/Map -t Path/to/Target/Map
 ```
