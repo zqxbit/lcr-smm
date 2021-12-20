@@ -97,7 +97,7 @@ public ceres::SizedCostFunction<1,Sophus::SE3d::num_parameters>{
         double probability = pow((2*M_PI*cov).determinant(), -1.0/2.0)*exp(malhalanobis);
         return probability;
     };
-
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     private:
     Eigen::Vector3d point_source_;
     Eigen::Vector3d point_target_;
