@@ -17,7 +17,7 @@ https://bitbucket.org/saparkison/semantic-icp
 #include <sophus/common.hpp>
 #include <pcl/registration/icp.h>
 #include <Eigen/Geometry>
-#include "lcr.hpp"
+
 
 template <size_t N>
 class LCR_SMM {
@@ -159,4 +159,5 @@ class LCR_SMM {
                           MatricesVectorPtr matvec,
                           DistVectorPtr distvec);
 };
+#include "lcr.hpp"
 #endif
